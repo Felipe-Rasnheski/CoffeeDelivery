@@ -10,7 +10,7 @@ import { PaymentMethod } from './components/paymentMethod'
 import { CheckoutForm, CompleteYourOrder } from './styles'
 
 const paymentAddressFormValidationsSchema = zod.object({
-  cep: zod.string().min(8, 'CEP inválido').max(9, 'CEP inválido'),
+  cep: zod.string().min(8).max(9),
   rua: zod.string().min(1),
   number: zod.number().min(1),
   complemento: zod.string(),
