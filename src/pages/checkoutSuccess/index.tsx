@@ -45,11 +45,10 @@ export function CheckoutSuccess() {
               <img src={mapPin} alt="" />
             </span>
             <p>
-              Entrega em{' '}
-              <strong>{addressInfo ? addressInfo.data.rua : ''}</strong> ,{' '}
-              {addressInfo ? addressInfo.data.number : ''} <br />
-              {addressInfo ? addressInfo.data.cidade : ''},{' '}
-              {addressInfo ? addressInfo.data.uf : ''}
+              Entrega em <strong>{addressInfo && addressInfo.data.rua}</strong>,{' '}
+              {addressInfo && addressInfo.data.number} <br />
+              {addressInfo && addressInfo.data.cidade},{' '}
+              {addressInfo && addressInfo.data.uf}
             </p>
           </div>
           <div>
@@ -67,7 +66,7 @@ export function CheckoutSuccess() {
             </span>
             <p>
               Pagamento na entrega <br />
-              <strong>{addressInfo ? addressInfo.paymentMethod : ''}</strong>
+              <strong>{addressInfo && addressInfo.paymentMethod}</strong>
             </p>
           </div>
         </div>

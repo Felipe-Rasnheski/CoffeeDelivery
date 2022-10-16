@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
+import { coffees } from '../../../../coffeesDescriptions'
 import { ActionsBuy } from '../actionsOfCoffeeMenu/Actions'
-import { coffees } from './coffeeDescriptions'
 import { ListContainer } from './styles'
 
 export function CoffeeMenu() {

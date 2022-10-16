@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useState } from 'react'
-import { coffees } from '../pages/home/components/coffeeMenu/coffeeDescriptions'
+import { coffees } from '../coffeesDescriptions'
 
 export interface Order {
   name: string
