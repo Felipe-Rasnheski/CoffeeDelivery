@@ -26,9 +26,9 @@ export type NewAddressDeliveryFormData = zod.infer<
 >
 
 export function Checkout() {
-  const { order, setOrder } = useContext(OrderContext)
+  const { order, setOrder, paymentMethod, setPaymentMethod, setInfoDelivery } =
+    useContext(OrderContext)
   const [totalOrder, setTotalOrder] = useState(0)
-  const [paymentMethod, setPaymentMethod] = useState('')
 
   const newFormAddress = useForm<NewAddressDeliveryFormData>({
     resolver: zodResolver(paymentAddressFormValidationsSchema),
@@ -60,44 +60,11 @@ export function Checkout() {
     setTotalOrder(orderSum)
   }
 
-  function setNumberSelectedCoffee(coffeeId: number, quantityOrdered: number) {
-    const updatedOrder = order.map((coffee) => {
-      if (coffee.id === coffeeId) {
-        coffee.coffeeAmount = quantityOrdered
-        return coffee
-      }
-
-      return coffee
-    })
-
-    setOrder(updatedOrder)
-    setSumOrder(updatedOrder)
-
-    const orderList = JSON.stringify(updatedOrder)
-    localStorage.setItem('@iginite-CoffeeDelivery:OrderList-1.0.0', orderList)
-  }
-
-  function handleRemoveOrder(coffeeId: number) {
-    const orderWithoutRemovedOne = order.filter(
-      (coffee) => coffee.id !== coffeeId,
-    )
-
-    setOrder(orderWithoutRemovedOne)
-    setSumOrder(orderWithoutRemovedOne)
-
-    const orderList = JSON.stringify(orderWithoutRemovedOne)
-    localStorage.setItem('@iginite-CoffeeDelivery:OrderList-1.0.0', orderList)
-  }
-
-  function handleDeliveryAddress(data: NewAddressDeliveryFormData) {
+  function handleDeliveryAddress(address: NewAddressDeliveryFormData) {
     if (paymentMethod !== '') {
-      const infoDelivery = JSON.stringify({ data, paymentMethod })
-
-      localStorage.setItem(
-        '@iginite-CoffeeDelivery:OrderList-1.0.0',
-        infoDelivery,
-      )
-
+      setInfoDelivery({ address, paymentMethod })
+      setOrder([])
+      setPaymentMethod('')
       navigate('/checkout/success')
     }
   }
@@ -122,20 +89,12 @@ export function Checkout() {
             </FormProvider>
           </div>
 
-          <PaymentMethod
-            paymentMethod={paymentMethod}
-            setPaymentMethod={setPaymentMethod}
-          />
+          <PaymentMethod />
         </CompleteYourOrder>
 
         <div className="container">
           <h2>Cafés selecionados</h2>
-          <CoffeeCard
-            order={order}
-            totalOrder={totalOrder}
-            setNumberSelectedCoffee={setNumberSelectedCoffee}
-            handleRemoveOrder={handleRemoveOrder}
-          />
+          <CoffeeCard totalOrder={totalOrder} />
         </div>
       </CheckoutForm>
     </CheckoutContainer>

@@ -1,37 +1,20 @@
-import { NavLink } from 'react-router-dom'
+import { useContext } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import { Order } from '../../../../context/OrderContext'
+import { OrderContext } from '../../../../context/OrderContext'
 import { CoffeeSelected } from './coffeeSelected'
 import { CoffeeCardContainer } from './styles'
 
 interface CoffeeCardProps {
-  order: Order[]
   totalOrder: number
-  setNumberSelectedCoffee: (coffeeId: number, quantityOrdered: number) => void
-  handleRemoveOrder: (coffeeId: number) => void
 }
 
-export function CoffeeCard({
-  order,
-  totalOrder,
-  setNumberSelectedCoffee,
-  handleRemoveOrder,
-}: CoffeeCardProps) {
+export function CoffeeCard({ totalOrder }: CoffeeCardProps) {
+  const { order } = useContext(OrderContext)
+
   return (
     <CoffeeCardContainer>
       {order.map((order) => {
-        return (
-          <CoffeeSelected
-            key={uuidv4()}
-            coffeeName={order.name}
-            coffeeId={order.id}
-            coffeeImg={order.img}
-            coffeeAmount={order.coffeeAmount}
-            coffeePrice={order.price}
-            setNumberSelectedCoffee={setNumberSelectedCoffee}
-            handleRemoveOrder={handleRemoveOrder}
-          />
-        )
+        return <CoffeeSelected key={uuidv4()} orderedCoffee={order} />
       })}
 
       <div>
@@ -53,7 +36,6 @@ export function CoffeeCard({
           </p>
         </div>
 
-        <NavLink to="/checkout/success"></NavLink>
         <button type="submit">Comfirmar pedido</button>
       </div>
     </CoffeeCardContainer>

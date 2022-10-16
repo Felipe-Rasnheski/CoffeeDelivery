@@ -1,37 +1,15 @@
 import { CurrencyDollar } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import Illustration from '../../assets/Illustration.png'
 import mapPin from '../../assets/mapPin2.svg'
 import timer from '../../assets/timer.svg'
+import { OrderContext } from '../../context/OrderContext'
 import { Header } from './header/Header'
 import { OrderInfoSuccessContainer } from './styles'
 
-interface AddressInfoProps {
-  data: {
-    cep: string
-    rua: string
-    number: number
-    complemento: string
-    bairro: string
-    cidade: string
-    uf: string
-  }
-  paymentMethod: string
-}
-
 export function CheckoutSuccess() {
-  const [addressInfo, setAddressInfo] = useState<AddressInfoProps>()
-
-  useEffect(() => {
-    const addressInfoJSON = localStorage.getItem(
-      '@iginite-CoffeeDelivery:OrderList-1.0.0',
-    )
-    if (addressInfoJSON) {
-      setAddressInfo(JSON.parse(addressInfoJSON))
-    }
-
-    localStorage.setItem('@iginite-CoffeeDelivery:OrderList-1.0.0', '')
-  }, [])
+  const { infoDelivery } = useContext(OrderContext)
+  const { address, paymentMethod } = infoDelivery
 
   return (
     <OrderInfoSuccessContainer>
@@ -45,10 +23,8 @@ export function CheckoutSuccess() {
               <img src={mapPin} alt="" />
             </span>
             <p>
-              Entrega em <strong>{addressInfo && addressInfo.data.rua}</strong>,{' '}
-              {addressInfo && addressInfo.data.number} <br />
-              {addressInfo && addressInfo.data.cidade},{' '}
-              {addressInfo && addressInfo.data.uf}
+              Entrega em <strong>{address.rua}</strong>, {address.number} <br />
+              {address.bairro} - {address.cidade}, {address.uf}
             </p>
           </div>
           <div>
@@ -66,7 +42,7 @@ export function CheckoutSuccess() {
             </span>
             <p>
               Pagamento na entrega <br />
-              <strong>{addressInfo && addressInfo.paymentMethod}</strong>
+              <strong>{paymentMethod}</strong>
             </p>
           </div>
         </div>

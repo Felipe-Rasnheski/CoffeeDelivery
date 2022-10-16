@@ -1,16 +1,11 @@
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { Bank, CreditCard, CurrencyDollar, Money } from 'phosphor-react'
+import { useContext } from 'react'
+import { OrderContext } from '../../../../context/OrderContext'
 import { PaymentMethodContainer } from './styles'
 
-interface PaymentMethodProps {
-  paymentMethod: string
-  setPaymentMethod: (method: string) => void
-}
-
-export function PaymentMethod({
-  paymentMethod,
-  setPaymentMethod,
-}: PaymentMethodProps) {
+export function PaymentMethod() {
+  const { paymentMethod, setPaymentMethod } = useContext(OrderContext)
   return (
     <PaymentMethodContainer>
       <div className="info" id="info">

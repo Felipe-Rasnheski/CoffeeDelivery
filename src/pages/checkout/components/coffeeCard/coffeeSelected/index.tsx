@@ -1,65 +1,81 @@
 import { Minus, Plus, Trash } from 'phosphor-react'
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
+import { Order, OrderContext } from '../../../../../context/OrderContext'
 import { CoffeeSelectedContainer } from './styles'
 
 interface CoffeeSelectedProps {
-  coffeeName: string
-  coffeeId: number
-  coffeeImg: string
-  coffeeAmount: number
-  coffeePrice: string
-  setNumberSelectedCoffee: (coffeeId: number, quantityOrdered: number) => void
-  handleRemoveOrder: (coffeeId: number) => void
+  orderedCoffee: Order
 }
 
-export function CoffeeSelected({
-  coffeeName,
-  coffeeId,
-  coffeeImg,
-  coffeeAmount,
-  coffeePrice,
-  setNumberSelectedCoffee,
-  handleRemoveOrder,
-}: CoffeeSelectedProps) {
-  const [quantityOrdered, setQuantityOrderes] = useState(0)
+export function CoffeeSelected({ orderedCoffee }: CoffeeSelectedProps) {
+  const { order, setOrder } = useContext(OrderContext)
+  const [quantityOrdered, setQuantityOrdered] = useState(
+    orderedCoffee.coffeeAmount,
+  )
 
-  useEffect(() => {
-    setQuantityOrderes(coffeeAmount)
-  }, [coffeeAmount])
+  function handleSetNumberSelectedCoffee(
+    coffeeId: number,
+    quantityOrdered: number,
+  ) {
+    if (quantityOrdered < 0) return
+    setQuantityOrdered(quantityOrdered)
 
-  function handleQuantityOrdered(action: string) {
-    if (action === 'ADD') {
-      setQuantityOrderes(quantityOrdered + 1)
-      setNumberSelectedCoffee(coffeeId, quantityOrdered + 1)
-    } else if (action === 'REMOVE' && quantityOrdered > 1) {
-      setQuantityOrderes(quantityOrdered - 1)
-      setNumberSelectedCoffee(coffeeId, quantityOrdered - 1)
-    }
+    const updatedOrder = order.map((coffee) => {
+      if (coffee.id === coffeeId) {
+        coffee.coffeeAmount = quantityOrdered
+        return coffee
+      }
+
+      return coffee
+    })
+
+    setOrder(updatedOrder)
+  }
+
+  function handleRemoveOrder(coffeeId: number) {
+    const orderWithoutRemovedOne = order.filter(
+      (coffee) => coffee.id !== coffeeId,
+    )
+
+    setOrder(orderWithoutRemovedOne)
   }
 
   return (
     <CoffeeSelectedContainer>
       <div className="boxSelectedCoffee">
-        <img src={coffeeImg} alt="" />
+        <img src={orderedCoffee.img} alt="" />
         <div>
-          <h3>{coffeeName}</h3>
+          <h3>{orderedCoffee.name}</h3>
           <div className="align">
             <span className="text-dark">
               <Minus
                 size={16}
-                onClick={() => handleQuantityOrdered('REMOVE')}
+                onClick={() =>
+                  handleSetNumberSelectedCoffee(
+                    orderedCoffee.id,
+                    quantityOrdered - 1,
+                  )
+                }
               />
               {quantityOrdered}
-              <Plus size={16} onClick={() => handleQuantityOrdered('ADD')} />
+              <Plus
+                size={16}
+                onClick={() =>
+                  handleSetNumberSelectedCoffee(
+                    orderedCoffee.id,
+                    quantityOrdered + 1,
+                  )
+                }
+              />
             </span>
-            <span onClick={() => handleRemoveOrder(coffeeId)}>
+            <span onClick={() => handleRemoveOrder(orderedCoffee.id)}>
               <Trash size={16} />
               REMOVER
             </span>
           </div>
         </div>
       </div>
-      <strong>R$ {coffeePrice}</strong>
+      <strong>R$ {orderedCoffee.price}</strong>
     </CoffeeSelectedContainer>
   )
 }
