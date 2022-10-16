@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Illustration from '../../assets/Illustration.png'
 import mapPin from '../../assets/mapPin2.svg'
 import timer from '../../assets/timer.svg'
+import { Header } from './header/Header'
 import { OrderInfoSuccessContainer } from './styles'
 
 interface AddressInfoProps {
@@ -34,6 +35,7 @@ export function CheckoutSuccess() {
 
   return (
     <OrderInfoSuccessContainer>
+      <Header />
       <h1>Uhu! Pedido confirmado</h1>
       <p>Agora é só aguardar que logo o café chegará até você</p>
       <div className="content">

@@ -30,25 +30,21 @@ export function PaymentMethod({
       >
         <ToggleGroup.Item
           value="Cartão de Crédito"
-          className={`${
-            paymentMethod === 'Cartão de Crédito' ? 'mark' : undefined
-          }`}
+          className={`${paymentMethod === 'Cartão de Crédito' && 'mark'}`}
         >
           <CreditCard size={16} />
           CARTÃO DE CRÉDITO
         </ToggleGroup.Item>
         <ToggleGroup.Item
           value="Cartão de Débito"
-          className={`${
-            paymentMethod === 'Cartão de Débito' ? 'mark' : undefined
-          }`}
+          className={`${paymentMethod === 'Cartão de Débito' && 'mark'}`}
         >
           <Bank size={16} />
           CARTÃO DE DÉBITO
         </ToggleGroup.Item>
         <ToggleGroup.Item
           value="Dinheiro"
-          className={`${paymentMethod === 'Dinheiro' ? 'mark' : undefined}`}
+          className={`${paymentMethod === 'Dinheiro' && 'mark'}`}
         >
           <Money size={16} />
           DINHEIRO

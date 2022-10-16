@@ -1,5 +1,4 @@
 import americano from './img/CoffeeAmericano.png'
-import árabe from './img/CoffeeÁrabe.png'
 import capuccino from './img/CoffeeCapuccino.png'
 import chocolateHot from './img/CoffeeChocolateQuente.png'
 import cubano from './img/CoffeeCubano.png'
@@ -12,12 +11,13 @@ import latte from './img/CoffeeLatte.png'
 import macchiato from './img/CoffeeMacchiato.png'
 import mochaccino from './img/CoffeeMochaccino.png'
 import whithMilk from './img/CoffeeWhithMilk.png'
+import árabe from './img/CoffeeÁrabe.png'
 
-export const cafes = [
+export const coffees = [
   {
     id: 1,
     name: 'Expresso Tradicional',
-    coffeeImg: expresso,
+    img: expresso,
     tags: ['Tradicional'],
     description: 'O tradicional feito com água quente e grãos moidos',
     price: '9,99',
@@ -25,7 +25,7 @@ export const cafes = [
   {
     id: 2,
     name: 'Expresso Americano',
-    coffeeImg: americano,
+    img: americano,
     tags: ['Tradicional'],
     description: 'Expresso diluído, menos intenso que o tradicional',
     price: '9,99',
@@ -33,7 +33,7 @@ export const cafes = [
   {
     id: 3,
     name: 'Expresso Cremoso',
-    coffeeImg: expressoCremoso,
+    img: expressoCremoso,
     tags: ['Tradicional'],
     description: 'Café expresso tradicional com espuma cremosa',
     price: '9,99',
@@ -41,7 +41,7 @@ export const cafes = [
   {
     id: 4,
     name: 'Expresso Gelado',
-    coffeeImg: iced,
+    img: iced,
     tags: ['Tradicional', 'Gelado'],
     description: 'Bebida preparada com café expresso e cubos de gelo',
     price: '9,99',
@@ -49,7 +49,7 @@ export const cafes = [
   {
     id: 5,
     name: 'Café com Leite',
-    coffeeImg: whithMilk,
+    img: whithMilk,
     tags: ['Tradicional', 'Com Leite'],
     description: 'Meio a meio de expresso tradicional com leite vaporizado',
     price: '11,99',
@@ -57,7 +57,7 @@ export const cafes = [
   {
     id: 6,
     name: 'Latte',
-    coffeeImg: latte,
+    img: latte,
     tags: ['Tradicional', 'Com leite'],
     description: 'Uma dose de café expresso com o dobro de espuma cremosa',
     price: '11,99',
@@ -65,7 +65,7 @@ export const cafes = [
   {
     id: 7,
     name: 'Capuccino',
-    coffeeImg: capuccino,
+    img: capuccino,
     tags: ['Tradicional', 'Com leite'],
     description:
       'Bebida com canela feita de doses iguais de café, leite e espuma',
@@ -74,7 +74,7 @@ export const cafes = [
   {
     id: 8,
     name: 'Macchiato',
-    coffeeImg: macchiato,
+    img: macchiato,
     tags: ['Tradicional', 'Com leite'],
     description:
       'Café expresso misturado com um pouco de leite quente e espuma',
@@ -83,7 +83,7 @@ export const cafes = [
   {
     id: 9,
     name: 'Macaccino',
-    coffeeImg: mochaccino,
+    img: mochaccino,
     tags: ['Tradicional', 'Com leite'],
     description: 'Café expresso com calda de chocolate, pouco leite e espuma',
     price: '11,99',
@@ -91,7 +91,7 @@ export const cafes = [
   {
     id: 10,
     name: 'Chocolate Quente',
-    coffeeImg: chocolateHot,
+    img: chocolateHot,
     tags: ['Especial', 'Com leite'],
     description: 'Bebida feita com chocolate dissolvido no leite quente e café',
     price: '11,99',
@@ -99,7 +99,7 @@ export const cafes = [
   {
     id: 11,
     name: 'Cubano',
-    coffeeImg: cubano,
+    img: cubano,
     tags: ['Especial', 'Alcoólico', 'Gelado'],
     description:
       'Drink gelado de café expresso com rum, creme de leite e hortelã',
@@ -108,7 +108,7 @@ export const cafes = [
   {
     id: 12,
     name: 'Havaiano',
-    coffeeImg: havaiano,
+    img: havaiano,
     tags: ['Especial'],
     description: 'Bebida adocicada preparada com café e leite de coco',
     price: '12,99',
@@ -116,7 +116,7 @@ export const cafes = [
   {
     id: 13,
     name: 'Árabe',
-    coffeeImg: árabe,
+    img: árabe,
     tags: ['Especial'],
     description: 'Bebida preparada com grãos de café árabe e especiarias',
     price: '15,99',
@@ -124,7 +124,7 @@ export const cafes = [
   {
     id: 14,
     name: 'Irlandês',
-    coffeeImg: irlandês,
+    img: irlandês,
     tags: ['Especial', 'Alcoólico'],
     description: 'Bebida a base de café, uisque irlandês, açúcar e chantilly',
     price: '15,99',

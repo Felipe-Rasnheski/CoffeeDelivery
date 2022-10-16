@@ -1,28 +1,15 @@
-import { ActionsContainer } from './styles'
 import { Minus, Plus, ShoppingCartSimple } from 'phosphor-react'
-import { useState } from 'react'
-import { Pedido } from '../coffeeMenu'
+import { useContext, useState } from 'react'
+import { OrderContext } from '../../../../context/OrderContext'
+import { ActionsContainer } from './styles'
 
 interface ActionsBuyProps {
   coffeeId: number
-  handleNewPedido: ({
-    coffeeId,
-    amount,
-    coffeeData: { coffeeImg, coffeeName, coffeePrice },
-  }: Pedido) => void
-  coffeeImg: string
-  coffeeName: string
-  coffeePrice: string
 }
 
-export function ActionsBuy({
-  coffeeId,
-  handleNewPedido,
-  coffeeImg,
-  coffeeName,
-  coffeePrice,
-}: ActionsBuyProps) {
+export function ActionsBuy({ coffeeId }: ActionsBuyProps) {
   const [amount, setAmount] = useState(1)
+  const { handleNewOrder } = useContext(OrderContext)
 
   function handleQuantityOrdered(action: string) {
     if (action === 'REMOVE' && amount > 1) {
@@ -44,10 +31,9 @@ export function ActionsBuy({
       </span>
       <button
         onClick={() => {
-          handleNewPedido({
+          handleNewOrder({
             coffeeId,
             amount,
-            coffeeData: { coffeeImg, coffeeName, coffeePrice },
           })
           setAmount(1)
         }}

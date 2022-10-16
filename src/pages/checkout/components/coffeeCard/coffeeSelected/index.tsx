@@ -3,21 +3,21 @@ import { useEffect, useState } from 'react'
 import { CoffeeSelectedContainer } from './styles'
 
 interface CoffeeSelectedProps {
-  coffeeData: {
-    coffeeImg: string
-    coffeeName: string
-    coffeePrice: string
-  }
-  coffeeAmount: number
+  coffeeName: string
   coffeeId: number
+  coffeeImg: string
+  coffeeAmount: number
+  coffeePrice: string
   setNumberSelectedCoffee: (coffeeId: number, quantityOrdered: number) => void
   handleRemoveOrder: (coffeeId: number) => void
 }
 
 export function CoffeeSelected({
-  coffeeData,
-  coffeeAmount,
+  coffeeName,
   coffeeId,
+  coffeeImg,
+  coffeeAmount,
+  coffeePrice,
   setNumberSelectedCoffee,
   handleRemoveOrder,
 }: CoffeeSelectedProps) {
@@ -40,9 +40,9 @@ export function CoffeeSelected({
   return (
     <CoffeeSelectedContainer>
       <div className="boxSelectedCoffee">
-        <img src={coffeeData.coffeeImg} alt="" />
+        <img src={coffeeImg} alt="" />
         <div>
-          <h3>{coffeeData.coffeeName}</h3>
+          <h3>{coffeeName}</h3>
           <div className="align">
             <span className="text-dark">
               <Minus
@@ -59,7 +59,7 @@ export function CoffeeSelected({
           </div>
         </div>
       </div>
-      <strong>R$ {coffeeData.coffeePrice}</strong>
+      <strong>R$ {coffeePrice}</strong>
     </CoffeeSelectedContainer>
   )
 }

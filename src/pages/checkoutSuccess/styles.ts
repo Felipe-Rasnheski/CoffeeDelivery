@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
 export const OrderInfoSuccessContainer = styled.div`
+  max-width: 1366px;
+  padding: 0 8rem;
+
   h1 {
     color: ${(props) => props.theme['yellow-dark']};
     font-family: 'Baloo 2', cursive;
@@ -46,7 +49,7 @@ export const OrderInfoSuccessContainer = styled.div`
 
     div {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.75rem;
     }
   }

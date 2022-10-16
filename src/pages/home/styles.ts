@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 
 export const HomeContainer = styled.div`
+  max-width: 1366px;
+  padding: 0 8rem;
+
   h2 {
     font-family: 'Baloo 2', cursive;
     font-weight: 800;

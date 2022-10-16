@@ -1,11 +1,11 @@
 import { NavLink } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { Pedido } from '../../../home/components/coffeeMenu'
+import { Order } from '../../../../context/OrderContext'
 import { CoffeeSelected } from './coffeeSelected'
 import { CoffeeCardContainer } from './styles'
 
 interface CoffeeCardProps {
-  order: Pedido[]
+  order: Order[]
   totalOrder: number
   setNumberSelectedCoffee: (coffeeId: number, quantityOrdered: number) => void
   handleRemoveOrder: (coffeeId: number) => void
@@ -23,9 +23,11 @@ export function CoffeeCard({
         return (
           <CoffeeSelected
             key={uuidv4()}
-            coffeeData={order.coffeeData}
-            coffeeAmount={order.amount}
-            coffeeId={order.coffeeId}
+            coffeeName={order.name}
+            coffeeId={order.id}
+            coffeeImg={order.img}
+            coffeeAmount={order.coffeeAmount}
+            coffeePrice={order.price}
             setNumberSelectedCoffee={setNumberSelectedCoffee}
             handleRemoveOrder={handleRemoveOrder}
           />
