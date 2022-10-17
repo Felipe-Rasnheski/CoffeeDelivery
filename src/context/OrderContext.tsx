@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useState } from 'react'
-import { coffees } from '../coffeesDescriptions'
+import { createContext, ReactNode, useReducer, useState } from 'react'
+import { actionAddNewOrderOrUpdate } from '../reducers/ order/actions'
+import { orderReducer } from '../reducers/ order/reducer'
 
 export interface Order {
   name: string
@@ -29,10 +30,9 @@ interface InfoDeliveryProps {
 
 interface OrderContextType {
   order: Order[]
-  setOrder: (order: Order[]) => void
+  dispatch: (order: any) => void
   handleNewOrder: (order: NewOrderProps) => void
   paymentMethod: string
-  setPaymentMethod: (paymentMethod: string) => void
   infoDelivery: InfoDeliveryProps
   setInfoDelivery: (address: InfoDeliveryProps) => void
 }
@@ -44,48 +44,30 @@ interface OrderContextProviderProps {
 export const OrderContext = createContext({} as OrderContextType)
 
 export function OrderContextProvider({ children }: OrderContextProviderProps) {
-  const [order, setOrder] = useState<Order[]>([])
-  const [paymentMethod, setPaymentMethod] = useState('')
   const [infoDelivery, setInfoDelivery] = useState<InfoDeliveryProps>(
     {} as InfoDeliveryProps,
   )
 
+  const [orderState, dispatch] = useReducer(orderReducer, {
+    order: [],
+    paymentMethod: '',
+  })
+
+  const { order, paymentMethod } = orderState
+
   function handleNewOrder({ coffeeId, amount }: NewOrderProps) {
     const orderAlreadyExists = order.some((order) => order.id === coffeeId)
 
-    const coffeeOrdered = coffees.find((coffee) => coffee.id === coffeeId)
-
-    if (orderAlreadyExists && coffeeOrdered) {
-      const orderUpdated = order.map((order) => {
-        if (order.id !== coffeeId) return order
-
-        return { ...order, coffeeAmount: order.coffeeAmount + amount }
-      })
-
-      setOrder(orderUpdated)
-    } else if (coffeeOrdered) {
-      const { name, id, img, price } = coffeeOrdered
-
-      const newCoffeeOrder = {
-        name,
-        id,
-        img,
-        price,
-        coffeeAmount: amount,
-      }
-
-      setOrder([...order, newCoffeeOrder])
-    }
+    dispatch(actionAddNewOrderOrUpdate(orderAlreadyExists, coffeeId, amount))
   }
 
   return (
     <OrderContext.Provider
       value={{
         order,
-        setOrder,
+        dispatch,
         handleNewOrder,
         paymentMethod,
-        setPaymentMethod,
         infoDelivery,
         setInfoDelivery,
       }}

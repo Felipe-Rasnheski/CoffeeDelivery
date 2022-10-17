@@ -5,6 +5,11 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as zod from 'zod'
 import { Order, OrderContext } from '../../context/OrderContext'
+import {
+  actionAddPaymentMethod,
+  // eslint-disable-next-line prettier/prettier
+  ActionTypes
+} from '../../reducers/ order/actions'
 import { CoffeeCard } from './components/coffeeCard'
 import { Header } from './components/header/Header'
 import { InputsForm } from './components/inputsForm'
@@ -26,7 +31,7 @@ export type NewAddressDeliveryFormData = zod.infer<
 >
 
 export function Checkout() {
-  const { order, setOrder, paymentMethod, setPaymentMethod, setInfoDelivery } =
+  const { order, dispatch, paymentMethod, setInfoDelivery } =
     useContext(OrderContext)
   const [totalOrder, setTotalOrder] = useState(0)
 
@@ -63,8 +68,10 @@ export function Checkout() {
   function handleDeliveryAddress(address: NewAddressDeliveryFormData) {
     if (paymentMethod !== '') {
       setInfoDelivery({ address, paymentMethod })
-      setOrder([])
-      setPaymentMethod('')
+      dispatch({
+        type: ActionTypes.CLEAR_ORDER,
+      })
+      dispatch(actionAddPaymentMethod(''))
       navigate('/checkout/success')
     }
   }

@@ -2,10 +2,16 @@ import * as ToggleGroup from '@radix-ui/react-toggle-group'
 import { Bank, CreditCard, CurrencyDollar, Money } from 'phosphor-react'
 import { useContext } from 'react'
 import { OrderContext } from '../../../../context/OrderContext'
+import { actionAddPaymentMethod } from '../../../../reducers/ order/actions'
 import { PaymentMethodContainer } from './styles'
 
 export function PaymentMethod() {
-  const { paymentMethod, setPaymentMethod } = useContext(OrderContext)
+  const { paymentMethod, dispatch } = useContext(OrderContext)
+
+  function handleTest(value: string) {
+    dispatch(actionAddPaymentMethod(value))
+  }
+
   return (
     <PaymentMethodContainer>
       <div className="info" id="info">
@@ -21,7 +27,7 @@ export function PaymentMethod() {
       <ToggleGroup.Root
         type="single"
         className="optionsPayment"
-        onValueChange={setPaymentMethod}
+        onValueChange={handleTest}
       >
         <ToggleGroup.Item
           value="Cartão de Crédito"

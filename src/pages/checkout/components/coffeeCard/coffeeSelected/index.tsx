@@ -1,6 +1,11 @@
 import { Minus, Plus, Trash } from 'phosphor-react'
 import { useContext, useState } from 'react'
 import { Order, OrderContext } from '../../../../../context/OrderContext'
+import {
+  actionDeleteOrder,
+  // eslint-disable-next-line prettier/prettier
+  actionUpdateOrderCheckout
+} from '../../../../../reducers/ order/actions'
 import { CoffeeSelectedContainer } from './styles'
 
 interface CoffeeSelectedProps {
@@ -8,7 +13,7 @@ interface CoffeeSelectedProps {
 }
 
 export function CoffeeSelected({ orderedCoffee }: CoffeeSelectedProps) {
-  const { order, setOrder } = useContext(OrderContext)
+  const { dispatch } = useContext(OrderContext)
   const [quantityOrdered, setQuantityOrdered] = useState(
     orderedCoffee.coffeeAmount,
   )
@@ -19,25 +24,13 @@ export function CoffeeSelected({ orderedCoffee }: CoffeeSelectedProps) {
   ) {
     if (quantityOrdered < 0) return
     setQuantityOrdered(quantityOrdered)
+    console.log(quantityOrdered)
 
-    const updatedOrder = order.map((coffee) => {
-      if (coffee.id === coffeeId) {
-        coffee.coffeeAmount = quantityOrdered
-        return coffee
-      }
-
-      return coffee
-    })
-
-    setOrder(updatedOrder)
+    dispatch(actionUpdateOrderCheckout(coffeeId, quantityOrdered))
   }
 
   function handleRemoveOrder(coffeeId: number) {
-    const orderWithoutRemovedOne = order.filter(
-      (coffee) => coffee.id !== coffeeId,
-    )
-
-    setOrder(orderWithoutRemovedOne)
+    dispatch(actionDeleteOrder(coffeeId))
   }
 
   return (
