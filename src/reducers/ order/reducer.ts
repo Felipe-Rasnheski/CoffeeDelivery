@@ -7,88 +7,102 @@ interface OrderState {
   paymentMethod: string
 }
 
-export function orderReducer(state: OrderState, action: any) {
-  if (action.type === ActionTypes.ADD_NEW_ORDER) {
-    const { coffeeId, amount } = action.payload
+interface OrderAction {
+  type: string
+  payload: {
+    coffeeId: number
+    amount: number
+    value: string
+  }
+}
 
-    const coffeeOrdered = coffees.find((coffee) => coffee.id === coffeeId)
+export function orderReducer(state: OrderState, action: OrderAction) {
+  switch (action.type) {
+    case ActionTypes.ADD_NEW_ORDER:
+      {
+        const { coffeeId, amount } = action.payload
 
-    if (coffeeOrdered) {
-      const { name, id, img, price } = coffeeOrdered
+        const coffeeOrdered = coffees.find((coffee) => coffee.id === coffeeId)
 
-      const newCoffeeOrder = {
-        name,
-        id,
-        img,
-        price,
-        coffeeAmount: amount,
+        if (coffeeOrdered) {
+          const { name, id, img, price } = coffeeOrdered
+
+          const newCoffeeOrder = {
+            name,
+            id,
+            img,
+            price,
+            coffeeAmount: amount,
+          }
+
+          return {
+            ...state,
+            order: [...state.order, newCoffeeOrder],
+          }
+        }
       }
+      break
+
+    case ActionTypes.UPDATE_ORDER: {
+      const { coffeeId, amount } = action.payload
+
+      const orderUpdated = state.order.map((order) => {
+        if (order.id !== coffeeId) return order
+
+        return { ...order, coffeeAmount: order.coffeeAmount + amount }
+      })
 
       return {
         ...state,
-        order: [...state.order, newCoffeeOrder],
+        order: orderUpdated,
       }
     }
-  }
 
-  if (action.type === ActionTypes.UPDATE_ORDER) {
-    const { coffeeId, amount } = action.payload
+    case ActionTypes.UPDATE_ORDER_CHECKOUT: {
+      const { coffeeId, amount } = action.payload
 
-    const orderUpdated = state.order.map((order) => {
-      if (order.id !== coffeeId) return order
+      const orderUpdated = state.order.map((order) => {
+        if (order.id !== coffeeId) return order
 
-      return { ...order, coffeeAmount: order.coffeeAmount + amount }
-    })
+        return { ...order, coffeeAmount: amount }
+      })
 
-    return {
-      ...state,
-      order: orderUpdated,
+      return {
+        ...state,
+        order: orderUpdated,
+      }
     }
-  }
 
-  if (action.type === ActionTypes.UPDATE_ORDER_CHECKOUT) {
-    const { coffeeId, amount } = action.payload
+    case ActionTypes.DELETE_ORDER: {
+      const { coffeeId } = action.payload
 
-    const orderUpdated = state.order.map((order) => {
-      if (order.id !== coffeeId) return order
+      const orderWithoutDeletedOne = state.order.filter(
+        (coffee) => coffee.id !== coffeeId,
+      )
 
-      return { ...order, coffeeAmount: amount }
-    })
-
-    return {
-      ...state,
-      order: orderUpdated,
+      return {
+        ...state,
+        order: orderWithoutDeletedOne,
+      }
     }
-  }
 
-  if (action.type === ActionTypes.DELETE_ORDER) {
-    const { coffeeId } = action.payload
-
-    const orderWithoutDeletedOne = state.order.filter(
-      (coffee) => coffee.id !== coffeeId,
-    )
-
-    return {
-      ...state,
-      order: orderWithoutDeletedOne,
+    case ActionTypes.CLEAR_ORDER: {
+      return {
+        ...state,
+        order: [],
+      }
     }
-  }
 
-  if (action.type === ActionTypes.CLEAR_ORDER) {
-    return {
-      ...state,
-      order: [],
+    case ActionTypes.ADD_PAYMENT_METHOD: {
+      const { value } = action.payload
+
+      return {
+        ...state,
+        paymentMethod: value,
+      }
     }
+
+    default:
+      return state
   }
-
-  if (action.type === ActionTypes.ADD_PAYMENT_METHOD) {
-    const { value } = action.payload
-
-    return {
-      ...state,
-      paymentMethod: value,
-    }
-  }
-
-  return state
 }

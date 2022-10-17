@@ -24,7 +24,6 @@ export function CoffeeSelected({ orderedCoffee }: CoffeeSelectedProps) {
   ) {
     if (quantityOrdered < 0) return
     setQuantityOrdered(quantityOrdered)
-    console.log(quantityOrdered)
 
     dispatch(actionUpdateOrderCheckout(coffeeId, quantityOrdered))
   }
