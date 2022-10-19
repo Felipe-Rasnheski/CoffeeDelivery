@@ -54,7 +54,13 @@ export function ActionsBuy({ coffeeId }: ActionsBuyProps) {
   return (
     <ActionsContainer>
       <span>
-        <Minus className="minus" onClick={() => setAmount(amount - 1)} />
+        <Minus
+          className="minus"
+          onClick={() => {
+            if (amount <= 1) return
+            setAmount(amount - 1)
+          }}
+        />
         {amount}
         <Plus onClick={() => setAmount(amount + 1)} />
       </span>
