@@ -1,6 +1,5 @@
-import { createContext, ReactNode, useReducer, useState } from 'react'
-import { actionAddNewOrderOrUpdate } from '../reducers/ order/actions'
-import { orderReducer } from '../reducers/ order/reducer'
+import React, { createContext, ReactNode, useReducer, useState } from 'react'
+import { OrderAction, orderReducer } from '../reducers/ order/reducer'
 
 export interface Order {
   name: string
@@ -8,11 +7,6 @@ export interface Order {
   img: string
   price: string
   coffeeAmount: number
-}
-
-interface NewOrderProps {
-  coffeeId: number
-  amount: number
 }
 
 interface InfoDeliveryProps {
@@ -30,8 +24,7 @@ interface InfoDeliveryProps {
 
 interface OrderContextType {
   order: Order[]
-  dispatch: (order: any) => void
-  handleNewOrder: (order: NewOrderProps) => void
+  dispatch: React.Dispatch<OrderAction>
   paymentMethod: string
   infoDelivery: InfoDeliveryProps
   setInfoDelivery: (address: InfoDeliveryProps) => void
@@ -55,18 +48,11 @@ export function OrderContextProvider({ children }: OrderContextProviderProps) {
 
   const { order, paymentMethod } = orderState
 
-  function handleNewOrder({ coffeeId, amount }: NewOrderProps) {
-    const orderAlreadyExists = order.some((order) => order.id === coffeeId)
-
-    dispatch(actionAddNewOrderOrUpdate(orderAlreadyExists, coffeeId, amount))
-  }
-
   return (
     <OrderContext.Provider
       value={{
         order,
         dispatch,
-        handleNewOrder,
         paymentMethod,
         infoDelivery,
         setInfoDelivery,

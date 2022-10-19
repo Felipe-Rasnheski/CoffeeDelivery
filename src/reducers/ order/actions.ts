@@ -1,3 +1,5 @@
+import { Order } from '../../context/OrderContext'
+
 /* eslint-disable no-unused-vars */
 export enum ActionTypes {
   ADD_NEW_ORDER = 'ADD_NEW_ORDER',
@@ -8,40 +10,29 @@ export enum ActionTypes {
   ADD_PAYMENT_METHOD = 'ADD_PAYMENT_METHOD',
 }
 
-export function actionAddNewOrderOrUpdate(
-  orderAlreadyExists: boolean,
-  coffeeId: number,
-  amount: number,
-) {
+export function actionAddNewOrder(newCoffeeOrder: Order) {
   return {
-    type: orderAlreadyExists
-      ? ActionTypes.UPDATE_ORDER
-      : ActionTypes.ADD_NEW_ORDER,
+    type: ActionTypes.ADD_NEW_ORDER,
     payload: {
-      coffeeId,
-      amount,
+      newCoffeeOrder,
     },
   }
 }
 
-export function actionUpdateOrderCheckout(
-  coffeeId: number,
-  quantityOrdered: number,
-) {
+export function actionUpdateOrder(updatedOrder: Order[]) {
   return {
-    type: ActionTypes.UPDATE_ORDER_CHECKOUT,
+    type: ActionTypes.UPDATE_ORDER,
     payload: {
-      coffeeId,
-      amount: quantityOrdered,
+      updatedOrder,
     },
   }
 }
 
-export function actionDeleteOrder(coffeeId: number) {
+export function actionDeleteOrder(updatedOrder: Order[]) {
   return {
     type: ActionTypes.DELETE_ORDER,
     payload: {
-      coffeeId,
+      updatedOrder,
     },
   }
 }

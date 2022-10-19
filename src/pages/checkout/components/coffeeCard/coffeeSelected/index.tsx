@@ -1,10 +1,10 @@
 import { Minus, Plus, Trash } from 'phosphor-react'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { Order, OrderContext } from '../../../../../context/OrderContext'
 import {
   actionDeleteOrder,
   // eslint-disable-next-line prettier/prettier
-  actionUpdateOrderCheckout
+  actionUpdateOrder
 } from '../../../../../reducers/ order/actions'
 import { CoffeeSelectedContainer } from './styles'
 
@@ -13,23 +13,27 @@ interface CoffeeSelectedProps {
 }
 
 export function CoffeeSelected({ orderedCoffee }: CoffeeSelectedProps) {
-  const { dispatch } = useContext(OrderContext)
-  const [quantityOrdered, setQuantityOrdered] = useState(
-    orderedCoffee.coffeeAmount,
-  )
+  const { order, dispatch } = useContext(OrderContext)
 
   function handleSetNumberSelectedCoffee(
     coffeeId: number,
     quantityOrdered: number,
   ) {
     if (quantityOrdered < 0) return
-    setQuantityOrdered(quantityOrdered)
 
-    dispatch(actionUpdateOrderCheckout(coffeeId, quantityOrdered))
+    const updatedOrder = order.map((order) => {
+      if (order.id !== coffeeId) return order
+
+      return { ...order, coffeeAmount: orderedCoffee.coffeeAmount }
+    })
+
+    dispatch(actionUpdateOrder(updatedOrder))
   }
 
   function handleRemoveOrder(coffeeId: number) {
-    dispatch(actionDeleteOrder(coffeeId))
+    const updatedOrder = order.filter((coffee) => coffee.id !== coffeeId)
+
+    dispatch(actionDeleteOrder(updatedOrder))
   }
 
   return (
@@ -45,17 +49,17 @@ export function CoffeeSelected({ orderedCoffee }: CoffeeSelectedProps) {
                 onClick={() =>
                   handleSetNumberSelectedCoffee(
                     orderedCoffee.id,
-                    quantityOrdered - 1,
+                    orderedCoffee.coffeeAmount - 1,
                   )
                 }
               />
-              {quantityOrdered}
+              {orderedCoffee.coffeeAmount}
               <Plus
                 size={16}
                 onClick={() =>
                   handleSetNumberSelectedCoffee(
                     orderedCoffee.id,
-                    quantityOrdered + 1,
+                    orderedCoffee.coffeeAmount + 1,
                   )
                 }
               />

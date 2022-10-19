@@ -68,10 +68,13 @@ export function Checkout() {
   function handleDeliveryAddress(address: NewAddressDeliveryFormData) {
     if (paymentMethod !== '') {
       setInfoDelivery({ address, paymentMethod })
+
       dispatch({
         type: ActionTypes.CLEAR_ORDER,
+        payload: {},
       })
       dispatch(actionAddPaymentMethod(''))
+
       navigate('/checkout/success')
     }
   }
