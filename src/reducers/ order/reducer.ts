@@ -12,14 +12,16 @@ export interface OrderAction {
   payload: {
     newCoffeeOrder?: Order
     updatedOrder?: Order[]
-    value?: string
+    paymentMethod?: string
   }
 }
 
-export function orderReducer(state: OrderState, action: any) {
+export function orderReducer(state: OrderState, action: OrderAction) {
   switch (action.type) {
     case ActionTypes.ADD_NEW_ORDER: {
       const { newCoffeeOrder } = action.payload
+
+      if (!newCoffeeOrder) return state
 
       return produce(state, (draft) => {
         draft.order.push(newCoffeeOrder)
@@ -29,6 +31,8 @@ export function orderReducer(state: OrderState, action: any) {
     case ActionTypes.UPDATE_ORDER: {
       const { updatedOrder } = action.payload
 
+      if (!updatedOrder) return state
+
       return produce(state, (draft) => {
         draft.order = updatedOrder
       })
@@ -36,6 +40,8 @@ export function orderReducer(state: OrderState, action: any) {
 
     case ActionTypes.DELETE_ORDER: {
       const { updatedOrder } = action.payload
+
+      if (!updatedOrder) return state
 
       return produce(state, (draft) => {
         draft.order = updatedOrder
@@ -49,10 +55,12 @@ export function orderReducer(state: OrderState, action: any) {
     }
 
     case ActionTypes.ADD_PAYMENT_METHOD: {
-      const { value } = action.payload
+      const { paymentMethod } = action.payload
+
+      if (!paymentMethod) return state
 
       return produce(state, (draft) => {
-        draft.paymentMethod = value
+        draft.paymentMethod = paymentMethod
       })
     }
 

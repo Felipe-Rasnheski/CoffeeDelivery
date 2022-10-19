@@ -8,7 +8,7 @@ import { PaymentMethodContainer } from './styles'
 export function PaymentMethod() {
   const { paymentMethod, dispatch } = useContext(OrderContext)
 
-  function handleTest(value: string) {
+  function handlePaymentMethod(value: string) {
     dispatch(actionAddPaymentMethod(value))
   }
 
@@ -27,7 +27,7 @@ export function PaymentMethod() {
       <ToggleGroup.Root
         type="single"
         className="optionsPayment"
-        onValueChange={handleTest}
+        onValueChange={handlePaymentMethod}
       >
         <ToggleGroup.Item
           value="Cartão de Crédito"

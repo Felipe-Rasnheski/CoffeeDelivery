@@ -41,7 +41,7 @@ export function actionAddPaymentMethod(value: string) {
   return {
     type: ActionTypes.ADD_PAYMENT_METHOD,
     payload: {
-      value,
+      paymentMethod: value,
     },
   }
 }
