@@ -24,7 +24,7 @@ export function CoffeeSelected({ orderedCoffee }: CoffeeSelectedProps) {
     const updatedOrder = order.map((order) => {
       if (order.id !== coffeeId) return order
 
-      return { ...order, coffeeAmount: orderedCoffee.coffeeAmount }
+      return { ...order, coffeeAmount: quantityOrdered }
     })
 
     dispatch(actionUpdateOrder(updatedOrder))

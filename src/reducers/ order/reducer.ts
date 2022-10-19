@@ -51,8 +51,6 @@ export function orderReducer(state: OrderState, action: any) {
     case ActionTypes.ADD_PAYMENT_METHOD: {
       const { value } = action.payload
 
-      // if (!value) return state
-
       return produce(state, (draft) => {
         draft.paymentMethod = value
       })
