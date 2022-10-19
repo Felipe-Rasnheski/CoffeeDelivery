@@ -519,7 +519,7 @@ Error generating stack: `+i.message+`
   button:hover {
     background: ${e=>e.theme.purple};
   }
-`;function Rx({coffeeId:e}){const[t,n]=C.exports.useState(1),{order:r,dispatch:o}=C.exports.useContext(pn);function i({coffeeId:s,amount:l}){if(r.some(u=>u.id===s)){const u=r.map(d=>d.id!==s?d:{...d,coffeeAmount:d.coffeeAmount+l});o(Hm(u))}else{const u=R0.find(S=>S.id===s);if(!u)return;const{name:d,id:p,img:h,price:x}=u;o(d2({name:d,id:p,img:h,price:x,coffeeAmount:l}))}}return L(Tx,{children:[L("span",{children:[c(f0,{className:"minus",onClick:()=>n(t-1)}),t,c(m0,{onClick:()=>n(t+1)})]}),c("button",{onClick:()=>{i({coffeeId:e,amount:t}),n(1)},children:c(q2,{})})]})}const Ox=lt.main`
+`;function Rx({coffeeId:e}){const[t,n]=C.exports.useState(1),{order:r,dispatch:o}=C.exports.useContext(pn);function i({coffeeId:s,amount:l}){if(r.some(u=>u.id===s)){const u=r.map(d=>d.id!==s?d:{...d,coffeeAmount:d.coffeeAmount+l});o(Hm(u))}else{const u=R0.find(S=>S.id===s);if(!u)return;const{name:d,id:p,img:h,price:x}=u;o(d2({name:d,id:p,img:h,price:x,coffeeAmount:l}))}}return L(Tx,{children:[L("span",{children:[c(f0,{className:"minus",onClick:()=>{t<=1||n(t-1)}}),t,c(m0,{onClick:()=>n(t+1)})]}),c("button",{onClick:()=>{i({coffeeId:e,amount:t}),n(1)},children:c(q2,{})})]})}const Ox=lt.main`
   display: grid;
   gap: 2.5rem 2rem;
   grid-template-columns: auto auto auto auto;
